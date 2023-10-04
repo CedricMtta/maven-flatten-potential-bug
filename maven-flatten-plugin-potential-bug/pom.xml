@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cedricmtta</groupId>
+  <artifactId>maven-flatten-plugin-potential-bug</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>child-module</module>
+  </modules>
+  <version>${revision}</version>
+  <name>maven-flatten-plugin-potential-bug</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <!-- Specified in local ~/.m2/settings.xml, uncomment to make the flatten-plugin work  -->
+    <!-- <unrelated.module.version>1.0-SNAPSHOT</unrelated.module.version>-->
+    <revision>1.0-SNAPSHOT</revision>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.5.0</version>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.cedricmtta</groupId>
+        <artifactId>unrelated-module</artifactId>
+        <version>${unrelated.module.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
